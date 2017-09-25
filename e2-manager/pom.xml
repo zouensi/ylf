@@ -22,7 +22,6 @@
   	<module>e2-manager-pojo</module>
   	<module>e2-manager-interface</module>
   	<module>e2-manager-service</module>
-  	<module>e2-manager-web</module>
   	<module>e2-manager-dao</module>
   </modules>
   <!-- 配置tomcat插件 -->
