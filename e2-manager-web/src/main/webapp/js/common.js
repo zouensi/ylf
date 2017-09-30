@@ -56,6 +56,7 @@ var E3 = {
         }
     },
     
+    //初始化方法
     init : function(data){
     	// 初始化图片上传组件
     	this.initPicUpload(data);
@@ -102,16 +103,21 @@ var E3 = {
     	});
     },
     
-    // 初始化选择类目组件
+    // 初始化选择类目组件,选择类目按钮触发事件
     initItemCat : function(data){
+    	//遍历选中的标签
     	$(".selectItemCat").each(function(i,e){
+    		//获取遍历得到元素的jquery对象，也就是每一个选择类目按钮
     		var _ele = $(e);
     		if(data && data.cid){
     			_ele.after("<span style='margin-left:10px;'>"+data.cid+"</span>");
     		}else{
+    			//在其后面添加一个span标签
     			_ele.after("<span style='margin-left:10px;'></span>");
     		}
+    		//接触绑定时间，然后重新添加点击事件
     		_ele.unbind('click').click(function(){
+    			//创建div标签，同时获取div的jquery对象，同时设置一个内边距为5px，然后创建子标签ul
     			$("<div>").css({padding:"5px"}).html("<ul>")
     			.window({
     				width:'500',
@@ -120,15 +126,18 @@ var E3 = {
     			    closed:true,
     			    iconCls:'icon-save',
     			    title:'选择类目',
-    			    onOpen : function(){
+    			    onOpen : function(){//打开窗口点击事件
+    			    	//获取当前div对象赋值给_win
     			    	var _win = this;
+    			    	//获取div下的所有ul标签,利用easyUi的tree设置为分类tree
     			    	$("ul",_win).tree({
-    			    		url:'/item/cat/list',
+    			    		url:'/itemCat/list',
     			    		animate:true,
     			    		onClick : function(node){
     			    			if($(this).tree("isLeaf",node.target)){
-    			    				// 填写到cid中
+    			    				// 填写到cid中,选择类目按钮的td父标签，设置其name属性为cid和值为id
     			    				_ele.parent().find("[name=cid]").val(node.id);
+    			    				//设置选择分类标签的下一个标签,为动态创建的span标签添加值和属性
     			    				_ele.next().text(node.text).attr("cid",node.id);
     			    				$(_win).window('close');
     			    				if(data && data.fun){
