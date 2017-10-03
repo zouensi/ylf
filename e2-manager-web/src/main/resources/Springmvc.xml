@@ -11,6 +11,7 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 	<context:component-scan base-package="com.ylf.controller" />
+	<context:property-placeholder location="classpath:resource.properties"/>
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler/>
 	<bean
@@ -19,9 +20,20 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+	
+	<!-- 定义文件上传解析器 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设定默认编码 -->
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<!-- 设定文件上传的最大值5MB，5*1024*1024 -->
+		<property name="maxUploadSize" value="5242880"></property>
+	</bean>
+	
+	
 	<!-- 引用dubbo服务 -->
 	<dubbo:application name="e2-manager-web"/>
-	<dubbo:registry protocol="zookeeper" address="192.168.106.128:2181"/>	
+	<dubbo:registry protocol="zookeeper" address="192.168.25.16:2181"/>	
 	<dubbo:reference interface="com.ylf.service.ItemService" id="itemService" timeout="30000"/>
 	<dubbo:reference interface="com.ylf.service.ItemCatService" id="itemCatService" timeout="30000"/>
 	
