@@ -17,7 +17,9 @@
         </tr>
     </thead>
 </table>
+<!--修改item的window  -->
 <div id="itemEditWindow" class="easyui-window" title="编辑商品" data-options="modal:true,closed:true,iconCls:'icon-save',href:'/rest/page/item-edit'" style="width:80%;height:80%;padding:10px;">
+	<
 </div>
 <script>
 
@@ -56,7 +58,7 @@
         		onLoad :function(){
         			//回显数据
         			var data = $("#itemList").datagrid("getSelections")[0];
-        			data.priceView = E3.formatPrice(data.price);
+        			data.priceView = E3.formatPrice(data.price);//格式化价格
         			$("#itemeEditForm").form("load",data);
         			
         			// 加载商品描述
@@ -117,7 +119,7 @@
         	$.messager.confirm('确认','确定删除ID为 '+ids+' 的商品吗？',function(r){
         	    if (r){
         	    	var params = {"ids":ids};
-                	$.post("/rest/item/delete",params, function(data){
+                	$.post("/item/delete",params, function(data){
             			if(data.status == 200){
             				$.messager.alert('提示','删除商品成功!',undefined,function(){
             					$("#itemList").datagrid("reload");
@@ -139,7 +141,7 @@
         	$.messager.confirm('确认','确定下架ID为 '+ids+' 的商品吗？',function(r){
         	    if (r){
         	    	var params = {"ids":ids};
-                	$.post("/rest/item/instock",params, function(data){
+                	$.post("/item/instock",params, function(data){
             			if(data.status == 200){
             				$.messager.alert('提示','下架商品成功!',undefined,function(){
             					$("#itemList").datagrid("reload");
@@ -161,7 +163,7 @@
         	$.messager.confirm('确认','确定上架ID为 '+ids+' 的商品吗？',function(r){
         	    if (r){
         	    	var params = {"ids":ids};
-                	$.post("/rest/item/reshelf",params, function(data){
+                	$.post("/item/reshelf",params, function(data){
             			if(data.status == 200){
             				$.messager.alert('提示','上架商品成功!',undefined,function(){
             					$("#itemList").datagrid("reload");

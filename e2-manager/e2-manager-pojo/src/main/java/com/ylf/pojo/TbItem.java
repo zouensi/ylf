@@ -2,7 +2,11 @@ package com.ylf.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ * 商品pojo
+ * @author DELL
+ *
+ */
 public class TbItem implements Serializable {
     private Long id;
 
@@ -19,7 +23,7 @@ public class TbItem implements Serializable {
     private String image;
 
     private Long cid;
-
+    //商品状态，1-正常，2-下架，3-删除
     private Byte status;
 
     private Date created;

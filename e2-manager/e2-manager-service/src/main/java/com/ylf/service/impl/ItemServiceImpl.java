@@ -14,8 +14,6 @@ import com.ylf.mapper.TbItemDescMapper;
 import com.ylf.mapper.TbItemMapper;
 import com.ylf.pojo.TbItem;
 import com.ylf.pojo.TbItemDesc;
-import com.ylf.pojo.TbItemDescExample;
-import com.ylf.pojo.TbItemDescExample.Criteria;
 import com.ylf.pojo.TbItemExample;
 import com.ylf.service.ItemService;
 import com.ylf.utils.E2Result;
@@ -82,14 +80,8 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public TbItemDesc getDescByItemId(Long itemId) {
-		TbItemDescExample example = new TbItemDescExample();
-		Criteria createCriteria = example.createCriteria();
-		createCriteria.andItemIdEqualTo(itemId);
-		List<TbItemDesc> descs = itemDescMapper.selectByExample(example);
-		if(descs!=null&&descs.size()!=0) {
-			return descs.get(0);
-		}
-		return null;
+		TbItemDesc desc = itemDescMapper.selectByPrimaryKey(itemId);
+		return desc;
 	}
 
 	@Override
@@ -103,4 +95,45 @@ public class ItemServiceImpl implements ItemService {
 		return null;
 	}
 
+	@Override
+	public E2Result updateItemStatus(String ids, Byte status) {
+		String[] newIds = null;
+		TbItem item = null;
+		if(ids!=null&&!ids.equals("")) {
+			item = new TbItem();
+			if(ids.contains(",")) {
+				newIds = ids.split(",");
+				for (int j = 0; j < newIds.length; j++) {
+					item.setId(Long.parseLong(newIds[j]));
+					item.setStatus(status);
+					//更新操作
+					itemMapper.updateByPrimaryKeySelective(item);
+				}
+			}else {
+				item.setId(Long.parseLong(ids));
+				item.setStatus(status);
+				//更新操作
+				itemMapper.updateByPrimaryKeySelective(item);
+			}
+		}
+		return E2Result.ok();
+	}
+
+	@Override
+	public E2Result updateItem(TbItem item, String desc) {
+		
+		//设置创建时间和更新时间
+		Date date = new Date();
+		item.setUpdated(date);
+		//保存订单数据
+		itemMapper.updateByPrimaryKey(item);
+		//创建商品描述信息
+		TbItemDesc tbItemDesc = new TbItemDesc();
+		//设置属性信息
+		tbItemDesc.setItemId(item.getId());
+		tbItemDesc.setItemDesc(desc);
+		tbItemDesc.setUpdated(date);
+		itemDescMapper.updateByPrimaryKeyWithBLOBs(tbItemDesc);
+		return E2Result.ok();
+	}
 }

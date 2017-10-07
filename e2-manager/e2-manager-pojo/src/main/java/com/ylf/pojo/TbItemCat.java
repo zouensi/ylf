@@ -1,7 +1,11 @@
 package com.ylf.pojo;
 
 import java.util.Date;
-
+/**
+ * 商品类目
+ * @author DELL
+ *
+ */
 public class TbItemCat {
     private Long id;
 

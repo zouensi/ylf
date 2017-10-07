@@ -1,8 +1,13 @@
 package com.ylf.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
-
-public class TbItemParam {
+/**
+ * 商品规格
+ * @author DELL
+ *
+ */
+public class TbItemParam implements Serializable{
     private Long id;
 
     private Long itemCatId;

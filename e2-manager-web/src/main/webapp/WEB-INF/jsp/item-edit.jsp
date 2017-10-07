@@ -5,6 +5,8 @@
 <div style="padding:10px 10px 10px 10px">
 	<form id="itemeEditForm" class="itemForm" method="post">
 		<input type="hidden" name="id"/>
+		<input type="hidden" name="status"/>
+		<input type="hidden" name="created">
 	    <table cellpadding="5">
 	        <tr>
 	            <td>商品类目:</td>
@@ -100,7 +102,7 @@
 		
 		$("#itemeEditForm [name=itemParams]").val(paramJson);
 		
-		$.post("/rest/item/update",$("#itemeEditForm").serialize(), function(data){
+		$.post("/item/update",$("#itemeEditForm").serialize(), function(data){
 			if(data.status == 200){
 				$.messager.alert('提示','修改商品成功!','info',function(){
 					$("#itemEditWindow").window('close');

@@ -15,4 +15,8 @@ public interface ItemService {
 	TbItemDesc getDescByItemId(Long itemId);
 
 	TbItem getItemByItemId(Long itemId);
+
+	E2Result updateItemStatus(String ids, Byte status);
+
+	E2Result updateItem(TbItem item, String desc);
 }

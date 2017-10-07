@@ -12,7 +12,16 @@
 
 	<context:component-scan base-package="com.ylf.controller" />
 	<context:property-placeholder location="classpath:resource.properties"/>
-	<mvc:annotation-driven />
+	<mvc:annotation-driven conversion-service="conversionService"/>
+	
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="com.ylf.converter.StringToDateConverter"/>
+			</set>
+		</property>
+	</bean>
+	
 	<mvc:default-servlet-handler/>
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -36,5 +45,6 @@
 	<dubbo:registry protocol="zookeeper" address="192.168.25.16:2181"/>	
 	<dubbo:reference interface="com.ylf.service.ItemService" id="itemService" timeout="30000"/>
 	<dubbo:reference interface="com.ylf.service.ItemCatService" id="itemCatService" timeout="30000"/>
+	<dubbo:reference interface="com.ylf.service.ItemCatParamService" id="itemCatParamService" timeout="30000"/>
 	
 </beans>
